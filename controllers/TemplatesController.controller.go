@@ -22,10 +22,3 @@ func StoreTemplate(c *gin.Context) {
 		"message": "Success",
 	})
 }
-
-// ServingTemplateCaption ..
-func ServingTemplateCaption(c *gin.Context) {
-	img := c.Param("img")
-
-	c.File("assets/caption_templates/" + img)
-}

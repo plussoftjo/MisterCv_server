@@ -38,7 +38,7 @@ func CreateToken(userid uint) (string, error) {
 		ClientID: AuthClientID,
 		Token:    token,
 	}
-	config.DB.Create(authToken)
+	config.DB.Create(&authToken)
 
 	return token, nil
 }
@@ -76,7 +76,7 @@ func MakeNewClient() {
 	}
 
 	// Create The Client with the DB
-	config.DB.Create(authClient)
+	config.DB.Create(&authClient)
 
 	FetchAuthClientSecret()
 

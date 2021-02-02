@@ -2,10 +2,10 @@
 package controllers
 
 import (
-	"fmt"
 	"path/filepath"
 	"server/config"
 	"server/models"
+	"server/vendors"
 
 	"net/http"
 
@@ -42,9 +42,8 @@ func UpdateBasicsInformations(c *gin.Context) {
 func BasicsInformationsUploadImage(c *gin.Context) {
 	file, _ := c.FormFile("image")
 	filename := filepath.Base(file.Filename)
-	fmt.Println(filename)
 
-	if err := c.SaveUploadedFile(file, "assets/uploads/BasicsInformations/"+filename); err != nil {
+	if err := c.SaveUploadedFile(file, "./public/Images/BasicsInformations/"+filename); err != nil {
 		c.JSON(500, gin.H{
 			"error":   err.Error(),
 			"message": "error",
@@ -52,14 +51,9 @@ func BasicsInformationsUploadImage(c *gin.Context) {
 		return
 	}
 
+	vendors.ResizeImage(filename, "min-"+filename, "./public/Images/BasicsInformations/")
 	c.JSON(200, gin.H{
-		"image":   filename,
+		"image":   "min-" + filename,
 		"message": "success",
 	})
-}
-
-// ServingBasicsInformationsImage ...
-func ServingBasicsInformationsImage(c *gin.Context) {
-	img := c.Param("img")
-	c.File("assets/uploads/BasicsInformations/" + img)
 }

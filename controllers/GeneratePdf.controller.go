@@ -30,13 +30,7 @@ func GenerateCv(c *gin.Context) {
 	id := c.Param("id")
 
 	var cvs models.Cvs
-	config.DB.Where("id = ?", id).
-		Preload("BasicsInformations").
-		Preload("Summary").
-		Preload("Educations").
-		Preload("WorkExperience").
-		Preload("Skills").
-		Preload("Certifications").First(&cvs)
+	config.DB.Where("id = ?", id).First(&cvs)
 
 	var template models.Templates
 	config.DB.Where("id = ?", cvs.TemplateID).First(&template)
@@ -44,11 +38,11 @@ func GenerateCv(c *gin.Context) {
 	r := u.NewRequestPdf("")
 
 	//html template path
-	templatePath := "assets/pdf_templates/" + template.TemplateURI
+	templatePath := "./public/Templates/CvTemplates/" + template.TemplateURI
 
 	fileName := id + "-" + strconv.FormatInt(int64(time.Now().Unix()), 10)
 	//path for download pdf
-	outputPath := "assets/pdf/" + fileName + ".pdf"
+	outputPath := "./public/PDF/" + fileName + ".pdf"
 
 	var basicsInformations models.BasicsInformations
 	var summary models.Summary
@@ -99,10 +93,17 @@ func GenerateCv(c *gin.Context) {
 	} else {
 		fmt.Println(err)
 	}
-
+	var cv models.Cvs
+	config.DB.Model(&models.Cvs{}).Where("id = ?", id).
+		Preload("BasicsInformations").
+		Preload("Summary").
+		Preload("Educations").
+		Preload("WorkExperience").
+		Preload("Skills").
+		Preload("Certifications").First(&cv)
 	c.JSON(200, gin.H{
 		"message": "Success",
-		"cv":      cvs,
+		"cv":      cv,
 	})
 }
 
@@ -132,15 +133,15 @@ func ServingHTML(c *gin.Context) {
 }
 
 // ServingCV ..
-func ServingCV(c *gin.Context) {
-	id := c.Param("id")
-	var cvs models.Cvs
-	// Get DB record
-	config.DB.Where("id = ?", id).First(&cvs)
-	// Fetch Uri
-	uri := cvs.URI
-	// Get File Link
-	fileURI := "assets/pdf/" + uri + ".pdf"
-	c.Header("Content-type", "application/pdf")
-	c.File(fileURI)
-}
+// func ServingCV(c *gin.Context) {
+// 	id := c.Param("id")
+// 	var cvs models.Cvs
+// 	// Get DB record
+// 	config.DB.Where("id = ?", id).First(&cvs)
+// 	// Fetch Uri
+// 	uri := cvs.URI
+// 	// Get File Link
+// 	fileURI := "assets/pdf/" + uri + ".pdf"
+// 	c.Header("Content-type", "application/pdf")
+// 	c.File(fileURI)
+// }

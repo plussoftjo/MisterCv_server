@@ -2,7 +2,6 @@
 package controllers
 
 import (
-	"fmt"
 	"server/config"
 	"server/models"
 
@@ -41,11 +40,4 @@ func MainIndex(c *gin.Context) {
 		"cvs":        cvs,
 		"templates":  templates,
 	})
-}
-
-// ServingImage ..
-func ServingImage(c *gin.Context) {
-	img := c.Param("img")
-	fmt.Println(img)
-	c.File(img)
 }

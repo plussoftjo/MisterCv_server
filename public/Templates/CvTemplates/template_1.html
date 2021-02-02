@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cv</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id="TheMain">
+        <div class="row">
+            <div class="col-xs-4" style="background-color: antiquewhite;" id="LeftSection">
+                <h3 style="text-align: left;padding:15px;font-weight: 700;font-family: 'Open Sans', sans-serif;">{{.BasicsInformations.FullName}}</h3>
+                <div class="mt-3" id="ImageSection">
+                    <img src="http://192.168.1.152:8082/public/Images/BasicsInformations/{{.BasicsInformations.Photo}}" class="img-responsive" />
+                </div>
+                <div id="BasicsInformations" style="margin-top: 30px;">
+                    <h3 style="font-weight: bold;border-bottom: 1px solid whitesmoke;">Informations</h3>
+                    
+                    <h3 style="font-weight: 700;font-size: 18px;">Phone:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> {{.BasicsInformations.Phone}}</p>
+                    <h3 style="font-weight: 700;font-size: 18px;">Email:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {{.BasicsInformations.Email}}</p>
+                    <h3 style="font-weight: 700;font-size: 18px;">Country:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{.BasicsInformations.Country}}</p>
+                    <h3 style="font-weight: 700;font-size: 18px;">City:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{.BasicsInformations.City}}</p>
+                    <h3 style="font-weight: 700;font-size: 18px;">Address:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> {{.BasicsInformations.Address}}</p>
+                    <h3 style="font-weight: 700;font-size: 18px;">Gender:</h3>
+                    <p style="font-weight: 700;"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{.BasicsInformations.Gender}}</p>
+                </div>
+            </div>
+            <div class="col-xs-6" >
+                <div style="padding-top: 15px;">
+                    <h3 style="font-weight: 700;">Summary</h3>
+                    <hr>
+                    <p>
+                        {{.Summary.Title}}
+                    </p>
+
+                </div>
+                <div style="padding-top: 5px;">
+                    <h3 style="font-weight: 700;">Skills</h3>
+                    <hr>
+                    <div class="container_fluid">
+                        <div class="row">
+                            {{range .WorkExperience}}
+                            <div class="col-xs-5">
+                                <strong>-</strong> {{.Title}}
+                            </div>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-top: 5px;">
+                    <h3 style="font-weight: 700;">Experiences</h3>
+                    <hr>
+                    <div class="container_fluid">
+                        {{range .WorkExperience}}
+                        <p>{{.Title}} <strong>-</strong> {{.Company}} <strong>-</strong> Start in: {{.Start}} <strong>-</strong> End in: {{.End}}</p>
+                        {{end}}
+                    </div>
+                </div>
+                <div style="padding-top: 5px;">
+                    <h3 style="font-weight: 700;">Educations</h3>
+                    <hr>
+                    <div class="container_fluid">
+                        {{range .Educations}}
+                        <p>{{.Title}} - {{.Colleague}} - <strong>Start in:</strong> {{.Start}} - <strong>End in: </strong>{{.End}}</p>
+                        {{end}}
+                    </div>
+                </div>
+                <div style="padding-top: 5px;">
+                    <h3 style="font-weight: 700;">Certifications</h3>
+                    <hr>
+                    <div class="container_fluid">
+                        {{range .Certifications}}
+                        <p>{{.Title}}</p>
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+</body>
+
+</html>

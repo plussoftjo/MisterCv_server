@@ -4,6 +4,7 @@ package routes
 import (
 	"server/controllers"
 
+	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,7 +13,11 @@ func Setup() {
 	r := gin.Default()
 
 	// Config
-	r.LoadHTMLGlob("assets/pdf_templates/*")
+	r.LoadHTMLGlob("./public/Templates/CvTemplates/*")
+
+	// gin.SetMode(gin.ReleaseMode)
+
+	r.Use(static.Serve("/public", static.LocalFile("./public", true)))
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
@@ -40,7 +45,6 @@ func Setup() {
 	cvs.POST("/basics_information/store", controllers.StoreBasicsInformations)
 	cvs.POST("/basics_information/update", controllers.UpdateBasicsInformations)
 	cvs.POST("/basics_information/image/store", controllers.BasicsInformationsUploadImage)
-	cvs.GET("/basics_information/image/serving/:img", controllers.ServingBasicsInformationsImage)
 	cvs.POST("/summary/store", controllers.StoreSummary)
 	cvs.POST("/summary/update", controllers.UpdateSummary)
 	cvs.POST("/skills/store", controllers.StoreSkills)
@@ -65,11 +69,7 @@ func Setup() {
 	// ~~~ Main Controller //
 	main := r.Group("/main")
 	main.GET("/index", controllers.MainIndex)
-	main.GET("/image/:img", controllers.ServingImage)
 	main.GET("/generate_cv/:id", controllers.GenerateCv)
-	main.GET("/serving_cv/:id", controllers.ServingCV)
-	main.GET("/servingHtml", controllers.ServingHTML)
-	main.GET("/serving_caption_html/:img", controllers.ServingTemplateCaption)
 
 	// AdminPanel
 	admin := r.Group("/admin")
