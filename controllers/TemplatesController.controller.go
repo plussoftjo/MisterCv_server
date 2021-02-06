@@ -11,6 +11,7 @@ import (
 
 // StoreTemplate ..
 func StoreTemplate(c *gin.Context) {
+
 	var template models.Templates
 	if err := c.ShouldBindJSON(&template); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -12,6 +12,8 @@ func Installing() {
 	// Setup The DB
 	config.SetupDB()
 
+	config.ServerInformations()
+
 	// SetupPassport
 	vendors.SetupPassport()
 

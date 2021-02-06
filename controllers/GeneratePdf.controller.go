@@ -38,11 +38,11 @@ func GenerateCv(c *gin.Context) {
 	r := u.NewRequestPdf("")
 
 	//html template path
-	templatePath := "./public/Templates/CvTemplates/" + template.TemplateURI
+	templatePath := config.ServerInfo.PublicPath + "public/Templates/CvTemplates/" + template.TemplateURI
 
 	fileName := id + "-" + strconv.FormatInt(int64(time.Now().Unix()), 10)
 	//path for download pdf
-	outputPath := "./public/PDF/" + fileName + ".pdf"
+	outputPath := config.ServerInfo.PublicPath + "public/PDF/" + fileName + ".pdf"
 
 	var basicsInformations models.BasicsInformations
 	var summary models.Summary
@@ -75,6 +75,7 @@ func GenerateCv(c *gin.Context) {
 		Skills             []models.Skills
 		Certifications     []models.Certifications
 		HasImage           bool
+		ServerURI          string
 	}{
 		BasicsInformations: basicsInformations,
 		Summary:            summary,
@@ -83,6 +84,7 @@ func GenerateCv(c *gin.Context) {
 		Skills:             skills,
 		Certifications:     certifications,
 		HasImage:           HasImage,
+		ServerURI:          config.ServerInfo.ServerURI,
 	}
 
 	if err := r.ParseTemplate(templatePath, templateData); err == nil {
@@ -132,16 +134,17 @@ func ServingHTML(c *gin.Context) {
 	})
 }
 
-// ServingCV ..
+//ServingCV ..
 // func ServingCV(c *gin.Context) {
 // 	id := c.Param("id")
+// 	fmt.Println("Called --------")
 // 	var cvs models.Cvs
 // 	// Get DB record
 // 	config.DB.Where("id = ?", id).First(&cvs)
 // 	// Fetch Uri
 // 	uri := cvs.URI
 // 	// Get File Link
-// 	fileURI := "assets/pdf/" + uri + ".pdf"
+// 	fileURI := "./public/PDF/" + uri + ".pdf"
 // 	c.Header("Content-type", "application/pdf")
 // 	c.File(fileURI)
 // }

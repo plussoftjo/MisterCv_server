@@ -2,7 +2,6 @@
 package controllers
 
 import (
-	"fmt"
 	"server/config"
 	"server/models"
 	"server/vendors"
@@ -30,8 +29,6 @@ func LoginController(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println(login.Password)
-	fmt.Println(user.Password)
 	// Check Password
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(login.Password))
 	if err != nil {

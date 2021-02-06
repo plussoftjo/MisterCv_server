@@ -34,10 +34,32 @@ func MainIndex(c *gin.Context) {
 	var templates []models.Templates
 	config.DB.Find(&templates)
 
+	var exampleCv models.Cvs
+	config.DB.Where("id = ?", 13).First(&exampleCv)
+
 	c.JSON(200, gin.H{
 		"user":       user,
 		"categories": categories,
 		"cvs":        cvs,
 		"templates":  templates,
+		"exampleCv":  exampleCv,
+	})
+}
+
+// IndexWithoutAuth ...
+func IndexWithoutAuth(c *gin.Context) {
+	var categories []models.Categories
+	config.DB.Find(&categories)
+
+	var templates []models.Templates
+	config.DB.Find(&templates)
+
+	var exampleCv models.Cvs
+	config.DB.Where("id = ?", 13).First(&exampleCv)
+
+	c.JSON(200, gin.H{
+		"categories": categories,
+		"templates":  templates,
+		"exampleCv":  exampleCv,
 	})
 }

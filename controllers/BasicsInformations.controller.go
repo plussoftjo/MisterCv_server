@@ -43,7 +43,7 @@ func BasicsInformationsUploadImage(c *gin.Context) {
 	file, _ := c.FormFile("image")
 	filename := filepath.Base(file.Filename)
 
-	if err := c.SaveUploadedFile(file, "./public/Images/BasicsInformations/"+filename); err != nil {
+	if err := c.SaveUploadedFile(file, config.ServerInfo.PublicPath+"public/Images/BasicsInformations/"+filename); err != nil {
 		c.JSON(500, gin.H{
 			"error":   err.Error(),
 			"message": "error",
@@ -51,7 +51,7 @@ func BasicsInformationsUploadImage(c *gin.Context) {
 		return
 	}
 
-	vendors.ResizeImage(filename, "min-"+filename, "./public/Images/BasicsInformations/")
+	vendors.ResizeImage(filename, "min-"+filename, config.ServerInfo.PublicPath+"public/Images/BasicsInformations/")
 	c.JSON(200, gin.H{
 		"image":   "min-" + filename,
 		"message": "success",
