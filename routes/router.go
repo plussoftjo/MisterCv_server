@@ -2,6 +2,7 @@
 package routes
 
 import (
+	"server/config"
 	"server/controllers"
 
 	"github.com/gin-contrib/cors"
@@ -23,11 +24,11 @@ func Setup() {
 	}))
 
 	// Config
-	r.LoadHTMLGlob("./public/Templates/CvTemplates/*")
+	r.LoadHTMLGlob(config.ServerInfo.PublicPath + "public/Templates/CvTemplates/*")
 
 	// gin.SetMode(gin.ReleaseMode)
 
-	r.Use(static.Serve("/public", static.LocalFile("./public", true)))
+	r.Use(static.Serve("/public", static.LocalFile(config.ServerInfo.PublicPath+"public", true)))
 
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
